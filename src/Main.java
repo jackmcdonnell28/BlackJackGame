@@ -27,7 +27,7 @@ public class Main {
         shuffle();
         printDeck();
         startGame();
-
+        Player play;
     }
 public void printDeck(){
     System.out.println("This deck:");
