@@ -4,7 +4,7 @@ public class Player {
     public boolean isFaceUp;
     public boolean hasGamlingProblem;
     public static void main(String[] args) {
-Player craig = new Player();
+Player Craig = new Player();
     }
     public Player(){
 hasGamlingProblem = true;
