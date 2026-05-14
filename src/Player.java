@@ -33,8 +33,12 @@ public class Player {
     // this one prints all the cards in hand
     public void printPlayer() {
 
-        System.out.println("Player " + numPlayer + "'s Hand:");
+        if(numPlayer == 0){
+            System.out.println("Dealer's hand: ");
+        } else {
+            System.out.println("Player " + numPlayer + "'s Hand:");
 
+        }
         for (int i = 0; i < numCards; i++) {
             hand[i].printInfo();
         }

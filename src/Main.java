@@ -31,15 +31,12 @@ public class Main {
             }
             }
         shuffle();
-        printDeck();
         craig = new Player(1);
-        startGame();
         grant = new Player(2);
         dealer = new Player(0);
         dealer.isDealer = true;
-        Player play;
-        Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine();
+//        Player play;
+        startGame();
     }
 
     public void printDeck(){
@@ -60,19 +57,20 @@ public class Main {
 
         while(true){
 
-            System.out.println("Player 1 has: " + craig.sumCards()); // declares the vcalue of cards
-            craig.printPlayer();
-
             if(craig.isBusted()){
                 System.out.println("You busted!"); // says if u busted or not
                 return;
             }
-
+            System.out.println("Player 1 has: " + craig.sumCards());
             System.out.println("Player 1: (h)it or (s)tand?"); // gives player 1 the option
             String input = sc.nextLine();
+            System.out.println("Player 1 has: " + craig.sumCards());
+
 
             if(input.equals("h")){
                 craig.addCard(drawCard());
+                craig.printPlayer();
+
             }
             else{
                 break;
@@ -90,7 +88,7 @@ public class Main {
             System.out.println("Dealer busted! You win!");
         }
         else if(craig.sumCards() > dealer.sumCards()){
-            System.out.println("Player wins!");
+            System.out.println("Player 1 wins!");
         }
         else if(dealer.sumCards() > craig.sumCards()){
             System.out.println("Dealer wins!");
