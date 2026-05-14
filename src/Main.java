@@ -1,15 +1,21 @@
-public class Main {
+import java.util.Scanner;
 
+public class Main {
+    int numCards;
     public Card[] deck;
     public Player craig;
+    public Player grant;
+    public Player dealer;
 
     public static void main(String[] args) {
         Main blackjack = new Main();
         System.out.println("Hello, World!");
+
         //
     }
     public Main(){
         deck  = new Card[52];
+        numCards = 0;
         for (int i = 0; i < deck.length;  i ++){
             if (i <13) {
                 deck[i] = new Card(i, "Spades", true);
@@ -26,24 +32,83 @@ public class Main {
             }
         shuffle();
         printDeck();
+        craig = new Player(1);
         startGame();
+        grant = new Player(2);
+        dealer = new Player(0);
+        dealer.isDealer = true;
         Player play;
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine();
     }
-public void printDeck(){
-    System.out.println("This deck:");
-    for(int i = 0; i < deck.length; i ++){
-        deck[i].printInfo();
+
+    public void printDeck(){
+        System.out.println("This deck:");
+        for(int i = 0; i < deck.length; i ++){
+            deck[i].printInfo();
+        }
     }
-}
-public void startGame(){
-      craig.printPlayer();
-    System.out.println("The dealer has been dealt the" +deck);
-}
+    public void startGame(){
+
+        Scanner sc = new Scanner(System.in);
+
+        craig.addCard(drawCard()); // this just gives everyone their cards
+        craig.addCard(drawCard());
+
+        dealer.addCard(drawCard());
+        dealer.addCard(drawCard());
+
+        while(true){
+
+            System.out.println("Player 1 has: " + craig.sumCards()); // declares the vcalue of cards
+            craig.printPlayer();
+
+            if(craig.isBusted()){
+                System.out.println("You busted!"); // says if u busted or not
+                return;
+            }
+
+            System.out.println("Player 1: (h)it or (s)tand?"); // gives player 1 the option
+            String input = sc.nextLine();
+
+            if(input.equals("h")){
+                craig.addCard(drawCard());
+            }
+            else{
+                break;
+            }
+        }
+
+        while(dealer.sumCards() < 17){ // makes it so dealer always has to hit below 17
+            dealer.addCard(drawCard());
+        }
+
+        System.out.println("Dealer has: " + dealer.sumCards());
+        dealer.printPlayer();
+
+        if(dealer.isBusted()){ // this is a conditional that decides who wins
+            System.out.println("Dealer busted! You win!");
+        }
+        else if(craig.sumCards() > dealer.sumCards()){
+            System.out.println("Player wins!");
+        }
+        else if(dealer.sumCards() > craig.sumCards()){
+            System.out.println("Dealer wins!");
+        }
+        else{
+            System.out.println("Tie game.");
+        }
+    }
+    public Card drawCard(){
+        Card temp = deck[numCards];
+        numCards++;
+        return temp;
+    }
     public void shuffle(){
 
         for(int i = 0; i < deck.length; i ++){
 
-            int randnum = (int)(Math.random()*52 );
+            int randnum = (int)(Math.random()* 52 );
             Card cardholder = deck[randnum];
             deck[randnum] = deck[i];
             deck[i] = cardholder;

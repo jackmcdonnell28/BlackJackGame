@@ -1,4 +1,8 @@
+
+
+
 public class Player {
+
 
     public int numPlayer;
     public boolean isFaceUp;
@@ -23,6 +27,7 @@ public class Player {
         isFaceUp = true;
 
 
+
     }
 
     // this one prints all the cards in hand
@@ -34,17 +39,19 @@ public class Player {
             hand[i].printInfo();
         }
 
+
         System.out.println("Hand Value: " + sumCards());
         System.out.println();
+
     }
 
     // this adds a card to the player's hand
     public void addCard(Card newCard) {
 
-        if (numCards < hand.length) {
+//        if (numCards < hand.length) {
             hand[numCards] = newCard;
             numCards++;
-        }
+//        }
     }
 
     // this calculates the value of the hand
@@ -55,9 +62,9 @@ public class Player {
 
         for (int i = 0; i < numCards; i++) {
 
-            int value = hand[i].value;
+             sumHand = sumHand + hand[i].value;
 
-            // this helps with managing aces and their values
+
 
         }
 
