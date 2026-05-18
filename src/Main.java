@@ -6,6 +6,7 @@ public class Main {
     public Player craig;
     public Player grant;
     public Player dealer;
+    public boolean hasGamblingAddiction = true;
 
     public static void main(String[] args) {
         Main blackjack = new Main();
@@ -36,6 +37,8 @@ public class Main {
         dealer = new Player(0);
         dealer.isDealer = true;
 //        Player play;
+        houseEdge();
+        collegeFund();h
         startGame();
     }
 
@@ -77,6 +80,7 @@ public class Main {
             }
         }
 
+
         while(dealer.sumCards() < 17){ // makes it so dealer always has to hit below 17
             dealer.addCard(drawCard());
         }
@@ -101,6 +105,15 @@ public class Main {
         Card temp = deck[numCards];
         numCards++;
         return temp;
+    }
+    public void houseEdge() {
+        int edge = (int) (Math.random() * 100);
+        System.out.println("This Casino has a " + edge + " percent house Edge");
+    }
+    public void collegeFund(){
+        if (hasGamblingAddiction == true){
+            System.out.println("Which child's college savings will you be betting with today?");
+        }
     }
     public void shuffle(){
 
