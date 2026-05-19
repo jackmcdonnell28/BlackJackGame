@@ -4,7 +4,7 @@ public class Main {
     int numCards;
     public Card[] deck;
     public Player craig;
-    public Player grant;
+    public Player steven;
     public Player dealer;
     public boolean hasGamblingAddiction = true;
 
@@ -33,12 +33,12 @@ public class Main {
             }
         shuffle();
         craig = new Player(1);
-        grant = new Player(2);
+        steven = new Player(2);
         dealer = new Player(0);
         dealer.isDealer = true;
 //        Player play;
         houseEdge();
-        collegeFund();h
+        collegeFund();
         startGame();
     }
 
@@ -58,6 +58,9 @@ public class Main {
         dealer.addCard(drawCard());
         dealer.addCard(drawCard());
 
+        steven.addCard(drawCard());
+        steven.addCard(drawCard());
+
         while(true){
 
             if(craig.isBusted()){
@@ -68,16 +71,39 @@ public class Main {
             System.out.println("Player 1: (h)it or (s)tand?"); // gives player 1 the option
             String input = sc.nextLine();
             System.out.println("Player 1 has: " + craig.sumCards());
+            System.out.println("Player 1: (h)it or (s)tand?");
 
 
-            if(input.equals("h")){
+
+            while(input.equals("h")){
+
                 craig.addCard(drawCard());
                 craig.printPlayer();
+                input = sc.nextLine();
 
             }
-            else{
-                break;
+
+
+
+            if(steven.isBusted()){
+                System.out.println("You busted!"); // says if u busted or not
+                return;
             }
+            System.out.println("Player 2 has: " + steven.sumCards());
+            System.out.println("Player 2: (h)it or (s)tand?");
+            String input2 = sc.nextLine();// gives player 2 the option
+            System.out.println("Player 2 has: " + steven.sumCards());
+            System.out.println("Player 2: (h)it or (s)tand?");
+
+
+            while(input2.equals("h")){
+                steven.addCard(drawCard());
+                steven.printPlayer();
+                input2 = sc.nextLine();
+
+            }
+            break;
+
         }
 
 
@@ -93,11 +119,18 @@ public class Main {
         }
         else if(craig.sumCards() > dealer.sumCards()){
             System.out.println("Player 1 wins!");
-        }
-        else if(dealer.sumCards() > craig.sumCards()){
+        } else if (craig.sumCards() > steven.sumCards()) {
+            System.out.println("Player 1 wins!");
+        } else if(dealer.sumCards() > craig.sumCards()){
             System.out.println("Dealer wins!");
-        }
-        else{
+        } else if (dealer.sumCards() > steven.sumCards()) {
+            System.out.println("Dealer wins!");
+        } else if (steven.sumCards() > craig.sumCards()) {
+            System.out.println("Player 2 wins!");
+
+        } else if (steven.sumCards() > dealer.sumCards()) {
+            System.out.println("Player 2 wins!");
+        } else{
             System.out.println("Tie game.");
         }
     }
