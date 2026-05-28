@@ -40,6 +40,7 @@ public class Main {
         houseEdge();
         collegeFund();
         startGame();
+        marriageOver();
     }
 
     public void printDeck(){
@@ -75,12 +76,20 @@ public class Main {
 
 
 
-            while(input.equals("h")){
+            while(input.equals("h")) {
 
                 craig.addCard(drawCard());
                 craig.printPlayer();
-                input = sc.nextLine();
 
+
+                if(craig.sumCards() > 21){
+                    System.out.println("Player 1 busted with " + craig.sumCards() + " points!");
+                    System.out.println("Dealer wins!");
+                    return; // ends the game immediately
+                }
+
+                System.out.println("Player 1: (h)it or (s)tand?");
+                input = sc.nextLine();
             }
 
 
@@ -96,44 +105,59 @@ public class Main {
             System.out.println("Player 2: (h)it or (s)tand?");
 
 
-            while(input2.equals("h")){
+            while(input2.equals("h")) {
+
                 steven.addCard(drawCard());
                 steven.printPlayer();
-                input2 = sc.nextLine();
 
+
+                if(steven.sumCards() > 21){
+                    System.out.println("Player 2 busted with " + steven.sumCards() + " points!");
+                    return;
+                }
+                if(steven.isBusted() && craig.sumCards() <21){
+                    System.out.println("Player 1 wins");
+                }
+
+                System.out.println("Player 2: (h)it or (s)tand?");
+                input2 = sc.nextLine();
             }
             break;
 
         }
 
 
-        while(dealer.sumCards() < 17){ // makes it so dealer always has to hit below 17
+        while(dealer.sumCards() < 17){ // makes it so dealer lowk always has to hit below 17
             dealer.addCard(drawCard());
         }
-
         System.out.println("Dealer has: " + dealer.sumCards());
         dealer.printPlayer();
-
-        if(dealer.isBusted()){ // this is a conditional that decides who wins
-            System.out.println("Dealer busted! You win!");
+        if(craig.sumCards() > steven.sumCards() && craig.sumCards() > dealer.sumCards()){
+            System.out.println("Player 1 wins!");
         }
-        else if(craig.sumCards() > dealer.sumCards()){
-            System.out.println("Player 1 wins!");
-        } else if (craig.sumCards() > steven.sumCards()) {
-            System.out.println("Player 1 wins!");
-        } else if(dealer.sumCards() > craig.sumCards()){
-            System.out.println("Dealer wins!");
-        } else if (dealer.sumCards() > steven.sumCards()) {
-            System.out.println("Dealer wins!");
-        } else if (steven.sumCards() > craig.sumCards()) {
+        else if(steven.sumCards() > craig.sumCards() && steven.sumCards() > dealer.sumCards()){
             System.out.println("Player 2 wins!");
-
-        } else if (steven.sumCards() > dealer.sumCards()) {
-            System.out.println("Player 2 wins!");
-        } else{
+        }
+        else if(dealer.sumCards() > craig.sumCards() && dealer.sumCards() > steven.sumCards()){
+            System.out.println("Dealer wins!");
+        }
+        else if(craig.sumCards() == steven.sumCards() &&
+                craig.sumCards() > dealer.sumCards()){
+            System.out.println("Player 1 and Player 2 tie!");
+        }
+        else if(craig.sumCards() == dealer.sumCards() &&
+                craig.sumCards() > steven.sumCards()){
+            System.out.println("Player 1 and Dealer tie!");
+        }
+        else if(steven.sumCards() == dealer.sumCards() &&
+                steven.sumCards() > craig.sumCards()){
+            System.out.println("Player 2 and Dealer tie!");
+        }
+        else{
             System.out.println("Tie game.");
         }
     }
+
     public Card drawCard(){
         Card temp = deck[numCards];
         numCards++;
@@ -157,6 +181,13 @@ public class Main {
             deck[randnum] = deck[i];
             deck[i] = cardholder;
 
+        }
+    }
+    public void marriageOver(){
+        if (craig.sumCards() < dealer.sumCards()){
+            System.out.println("My wife's going to kill me");
+        } else if (steven.sumCards() < dealer.sumCards()) {
+            System.out.println("Steven's wife is going to kill him");
         }
     }
 }
